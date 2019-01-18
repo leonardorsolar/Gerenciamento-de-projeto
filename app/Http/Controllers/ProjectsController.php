@@ -13,7 +13,7 @@ class ProjectsController extends Controller
     public function index()
     {
 
-            // recupero todos os projetos no banco
+    // recupero todos os projetos no banco
     $projects= Project::all();
 
     //
@@ -24,8 +24,12 @@ class ProjectsController extends Controller
     public function store()
     {
 
+        // validate
+        //Se o atributo required estiver presente, o campo deve conter um valor quando o formulário for enviado.
+        $attributes = request()->validate(['title' => 'required', 'description' => 'required']);
+
         // insert no banco persist
-    Project::create(request(['title','description']));
+    Project::create($attributes);
 
     // redirect
     return redirect ('projects');
