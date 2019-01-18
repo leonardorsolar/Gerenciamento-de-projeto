@@ -15,20 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/projects', function () {
 
-    // recupero todos os projetos no banco
-    $projects= App\Project::all();
+Route::get('/projects', 'ProjectsController@index');
 
-    //
-    return view ('projects.index', compact('projects'));
-    
-    
-});
-
-Route::post('/projects', function () {
-
-    // insert no banco
-    App\Project::create(request(['title','description']));
-    
-});
+Route::post('/projects', 'ProjectsController@store');

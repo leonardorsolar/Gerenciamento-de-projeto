@@ -23,7 +23,7 @@ class ProjectsTest extends TestCase
         ];
 
         // envio da requisição
-        $this->post('/projects',$attributes); 
+        $this->post('/projects',$attributes)->assertRedirect('/projects'); 
 
         // Verifica no banco se os atributos foram criado na tabela projets
         $this->assertDatabaseHas('projects',$attributes);
