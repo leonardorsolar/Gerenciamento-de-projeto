@@ -23,15 +23,30 @@ class ProjectsTest extends TestCase
         ];
 
         // envio da requisição
-        $this->post('/projects',$attributes)->assertRedirect('/projects'); 
+        $this->post('/projects', $attributes)->assertRedirect('/projects'); 
 
         // Verifica no banco se os atributos foram criado na tabela projets
-        $this->assertDatabaseHas('projects',$attributes);
+        $this->assertDatabaseHas('projects', $attributes);
 
         // recupera
         $this->get('/projects')->assertSee($attributes['title']); 
 
     }
+
+         /** @test */
+         public function a_user_can_view_a_project() 
+         {
+            $this->withoutExceptionHandling();
+
+            $project = factory('App\Project')->create();
+
+            //$this->get('/projects/' .  $project->id)
+
+            $this->get($project->path())
+                ->assertSee($project->title)
+                ->assertSee($project->description);;
+         }  
+    
 
 
         /** @test */

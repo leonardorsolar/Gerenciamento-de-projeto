@@ -1,18 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Document</title>
+    <title>Gerenciamento</title>
 </head>
 <body>
 
 <ul>
+    <h1>Gerenciamento</h1>
     
-    // todos projetos ... um projeto
-    @foreach ($projects as $project)
+    @forelse ($projects as $project)
 
-    <li>{{ $project->title}}</li>
+    <ul>
 
-    @endforeach
+    <li>
+        <a href="{{ $project->path}}">{{ $project->title}}</a>
+    </li>
+    @empty
+
+    <li>No projects yet.</li>
+
+    @endforelse
+
+    </ul>
 
 </ul> 
 

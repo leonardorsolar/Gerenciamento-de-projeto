@@ -21,12 +21,26 @@ class ProjectsController extends Controller
 
     }
 
+    public function show(Project $project)
+    {
+
+    // $project = Project::findOrFail(request('project'));
+    
+
+    //
+    return view ('projects.show', compact('project'));
+
+    }
+
     public function store()
     {
 
         // validate
         //Se o atributo required estiver presente, o campo deve conter um valor quando o formulário for enviado.
-        $attributes = request()->validate(['title' => 'required', 'description' => 'required']);
+        $attributes = request()->validate([
+            'title' => 'required', 
+            'description' => 'required'
+            ]);
 
         // insert no banco persist
     Project::create($attributes);
