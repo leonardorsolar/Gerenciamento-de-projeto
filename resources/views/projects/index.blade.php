@@ -7,19 +7,19 @@
 
 <ul>
     <h1>Gerenciamento</h1>
-    
-    @forelse ($projects as $project)
 
     <ul>
+    
+        @forelse ($projects as $project)
 
-    <li>
-        <a href="{{ $project->path}}">{{ $project->title}}</a>
-    </li>
-    @empty
+            <li>
+                <a href="{{ $project->path() }}">{{ $project->title }}</a>
+            </li>
+            @empty
 
-    <li>No projects yet.</li>
+            <li>No projects yet.</li>
 
-    @endforelse
+        @endforelse
 
     </ul>
 

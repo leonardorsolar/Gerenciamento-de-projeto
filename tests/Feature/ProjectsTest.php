@@ -10,11 +10,29 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class ProjectsTest extends TestCase
 {
     use WithFaker, RefreshDatabase;
+
+    /** @test */
+    public function only_authenticated_users_can_create_projects() 
+    {
+        //$this->withoutExceptionHandling();
+            //raw(); utilizar o médoto raw para pré-preencher os atributos comuns, após 
+            //preenchidos estes atributos simplesmente complete com os valores adicionais que você precisa:
+            //$attributes = factory('App\Project')->raw(['owner_id' => null]);
+        $attributes = factory('App\Project')->raw();
+
+
+            // assertSessionHasErrors: Afirmando a sessão tem erros para uma dada chave ...
+            // $this->post('/projects', $attributes)->assertSessionHasErrors('owner_id');
+        $this->post('/projects', $attributes)->assertRedirect('login');
+            
+    }    
     
     /** @test */
     public function a_user_can_create_a_project()
     {
         $this->withoutExceptionHandling();
+
+        $this->actingAs(factory('App\User')->create());
 
     $attributes = [
 
@@ -52,6 +70,10 @@ class ProjectsTest extends TestCase
         /** @test */
         public function a_project_require_a_title() 
         {
+
+            $this->actingAs(factory('App\User')->create());
+
+
             $attributes = factory('App\Project')->raw(['title' => '']);
     
             $this->post('/projects', $attributes)->assertSessionHasErrors('title');
@@ -61,9 +83,12 @@ class ProjectsTest extends TestCase
          public function a_project_require_a_description() 
          {
 
+            $this->actingAs(factory('App\User')->create());
+
             $attributes = factory('App\Project')->raw(['description' => '']);
      
              $this->post('/projects', $attributes)->assertSessionHasErrors('description');
-         }         
+         } 
+         
 
 }
