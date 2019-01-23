@@ -14,8 +14,8 @@ class ProjectsController extends Controller
     {
 
     // recupero todos os projetos no banco
-    $projects= Project::all();
-
+    //$projects= Project::all();
+    $projects= auth()->user()->projects;
     //
     return view ('projects.index', compact('projects'));
 
@@ -25,10 +25,13 @@ class ProjectsController extends Controller
     {
 
     // $project = Project::findOrFail(request('project'));
+    //an_authenticated_cannot_view_the_projects_of_others()
+    //if (auth()->id() != $project->owner_id) {
+        if (auth()->user()->isNot($project->owner)) {   
+        abort(403);
+    }
     
-    //
-    
-    return view ('projects.show', compact('project'));
+    return view('projects.show', compact('project'));
 
     }
 

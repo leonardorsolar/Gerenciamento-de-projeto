@@ -12,7 +12,7 @@ class ProjectsTest extends TestCase
     use WithFaker, RefreshDatabase;
 
     /** @test */
-    public function only_authenticated_users_can_create_projects() 
+    public function guests_cannot_create_projects() 
     {
         //$this->withoutExceptionHandling();
             //raw(); utilizar o médoto raw para pré-preencher os atributos comuns, após 
@@ -25,8 +25,26 @@ class ProjectsTest extends TestCase
             // $this->post('/projects', $attributes)->assertSessionHasErrors('owner_id');
         $this->post('/projects', $attributes)->assertRedirect('login');
             
-    }    
+    }  
     
+    /** @test */
+    public function guests_cannot_view_projects() 
+    {
+
+        $this->get('/projects')->assertRedirect('login');
+            
+    }     
+ 
+    /** @test */
+    public function guests_cannot_view_a_single_projects() 
+    {
+
+        $project = factory('App\Project')->create();
+
+        $this->get($project->path())->assertRedirect('login');
+            
+    }      
+
     /** @test */
     public function a_user_can_create_a_project()
     {
@@ -52,11 +70,13 @@ class ProjectsTest extends TestCase
     }
 
          /** @test */
-         public function a_user_can_view_a_project() 
+         public function a_user_can_view_their_project() 
          {
+            $this->be(factory('App\User')->create());
+
             $this->withoutExceptionHandling();
 
-            $project = factory('App\Project')->create();
+            $project = factory('App\Project')->create(['owner_id' => auth()->id()]);
 
             //$this->get('/projects/' .  $project->id)
 
@@ -65,7 +85,18 @@ class ProjectsTest extends TestCase
                 ->assertSee($project->description);;
          }  
     
+       /** @test */
+       public function an_authenticated_cannot_view_the_projects_of_others() 
+       {
+        $this->be(factory('App\User')->create());
 
+        //$this->withoutExceptionHandling();
+
+        $project = factory('App\Project')->create();
+        // está recebendo 500
+        $this->get($project->path())->assertStatus(403);
+
+       } 
 
         /** @test */
         public function a_project_require_a_title() 
