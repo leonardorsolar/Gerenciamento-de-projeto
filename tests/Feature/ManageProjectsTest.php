@@ -7,41 +7,27 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 
-class ProjectsTest extends TestCase
+class ManageProjectsTest extends TestCase
 {
     use WithFaker, RefreshDatabase;
 
     /** @test */
-    public function guests_cannot_create_projects() 
+    public function guests_cannot_manage_projects() 
     {
         //$this->withoutExceptionHandling();
             //raw(); utilizar o médoto raw para pré-preencher os atributos comuns, após 
             //preenchidos estes atributos simplesmente complete com os valores adicionais que você precisa:
-            //$attributes = factory('App\Project')->raw(['owner_id' => null]);
-        $attributes = factory('App\Project')->raw();
-
+            //$attributes = factory('App\Project')->raw(['owner_id' => null]);  
+        //$attributes = factory('App\Project')->raw();
+        $project = factory('App\Project')->create();
 
             // assertSessionHasErrors: Afirmando a sessão tem erros para uma dada chave ...
             // $this->post('/projects', $attributes)->assertSessionHasErrors('owner_id');
-        $this->post('/projects', $attributes)->assertRedirect('login');
-            
-    }  
-    
-    /** @test */
-    public function guests_cannot_view_projects() 
-    {
-
         $this->get('/projects')->assertRedirect('login');
-            
-    }     
- 
-    /** @test */
-    public function guests_cannot_view_a_single_projects() 
-    {
-
-        $project = factory('App\Project')->create();
-
+        $this->get('/projects/create')->assertRedirect('login');
         $this->get($project->path())->assertRedirect('login');
+        $this->post('/projects', $project->toarray())->assertRedirect('login');
+        
             
     }      
 
@@ -51,6 +37,8 @@ class ProjectsTest extends TestCase
         $this->withoutExceptionHandling();
 
         $this->actingAs(factory('App\User')->create());
+
+        $this->get('/projects/create')->assertStatus(200);
 
     $attributes = [
 
