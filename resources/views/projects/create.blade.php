@@ -1,11 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.app')
 
-<head>
-    <title>Gerenciamento</title>
+@section('content')
+
+
 
     <link rel="stylesheet" type="text/css "href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.css">
-</head>
+
 
 <body>
 
@@ -34,10 +34,10 @@
         <div class="field">
 
             <div class="control"><button type="submit" class="button is-link">Criar Projeto</button></div>
+            <a href="/projects">Cancelar</a>
 
     </form>
 
 
-    
-</body>
-</html>
+    @endsection
+

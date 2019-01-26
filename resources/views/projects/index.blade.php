@@ -1,12 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Gerenciamento</title>
-</head>
-<body>
+@extends('layouts.app')
 
-<ul>
-    <h1>Gerenciamento</h1>
+@section('content')
+
+<div class="flex items-center mb-3" >
+        <!-- <h1 class="mr-auto">Gerenciamento de Projetos</h1>  -->
+
+        <a href="/projects/create">Novos Projetos</a>
+
+</div>
+
+ 
 
     <ul>
     
@@ -23,8 +26,6 @@
 
     </ul>
 
-</ul> 
 
-    
-</body>
-</html>
+
+@endsection
