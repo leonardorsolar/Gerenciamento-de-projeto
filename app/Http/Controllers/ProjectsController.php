@@ -56,13 +56,13 @@ class ProjectsController extends Controller
             //dd($attributes);
             //$attributes ['owner_id'] = auth()->id();
 
-            auth()->user()->projects()->create($attributes);
+            $project = auth()->user()->projects()->create($attributes);
 
         // persist = insert no banco = passar o método a ser persistido como parametro
     //Project::create($attributes);
 
     // redirect
-    return redirect('/projects');
+    return redirect($project->path());
         
     }
 

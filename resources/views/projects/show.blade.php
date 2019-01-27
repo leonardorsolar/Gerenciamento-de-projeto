@@ -20,14 +20,20 @@
                                 <div class="mb-8">
                                     <h2 class="text-lg text-grey font-normal mb-3">Tarefas</h2>
                 
-                                    {{-- tasks --}}
-                                    @foreach ($project->tasks as $task)
-                                                                    
-                                        <div class="bg-white p-3 rounded-lg  mb-3"> {{ $task->body}} </div>
-                                    
-                                        @endforeach
+                   {{-- tasks --}}
+                   @foreach ($project->tasks as $task)
+                   <div class="bg-white p-4 rounded-lg  mb-3"> {{ $task->body }} </div>     
+               @endforeach
+
+               <div class="bg-white p-4 rounded-lg mb-3">
+                            
+                    <form action="{{$project->path() . '/tasks'}}" method="POST">
+                     @csrf
+                             <input placeholder="Adicionar uma nova tarefa" class="w-full" name="body"> 
+                        </form>
+                     </div>
                 
-                                </div>
+                 </div>
                     
                     <div>
                         <h2 class="text-lg text-grey font-normal mb-3">General Notes</h2>
