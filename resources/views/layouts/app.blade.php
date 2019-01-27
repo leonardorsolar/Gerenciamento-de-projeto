@@ -19,13 +19,17 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
-<body>
+<body bgcolor="#E6E6FA" class="bg-grey-light">
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
-            <div class="container">
+            <div class="container mx-auto">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    <img align="left" src="/images/6326.jpg" height="30" width="30">
+                    <h3 style="font-family: 'Roboto', sans-serif;">Gerenciamento de Projetos</h3>
+            
+                
                 </a>
+                
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -72,7 +76,7 @@
             </div>
         </nav>
 
-        <main class="container py-4">
+        <main class="container mx-auto py-4">
             @yield('content')
         </main>
     </div>
