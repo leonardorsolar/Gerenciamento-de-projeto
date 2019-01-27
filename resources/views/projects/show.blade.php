@@ -21,11 +21,11 @@
                                     <h2 class="text-lg text-grey font-normal mb-3">Tarefas</h2>
                 
                                     {{-- tasks --}}
-                                
-                                    <div class="bg-white p-3 rounded-lg  mb-3"> tarefa 01 </div>
-                                    <div class="bg-white p-3 rounded-lg  mb-3"> tarefa 01 </div>
-                                    <div class="bg-white p-3 rounded-lg  mb-3"> tarefa 01 </div>
-                                    <div class="bg-white p-3 rounded-lg  mb-3"> tarefa 01 </div>
+                                    @foreach ($project->tasks as $task)
+                                                                    
+                                        <div class="bg-white p-3 rounded-lg  mb-3"> {{ $task->body}} </div>
+                                    
+                                        @endforeach
                 
                                 </div>
                     
