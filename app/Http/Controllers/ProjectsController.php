@@ -27,9 +27,10 @@ class ProjectsController extends Controller
     // $project = Project::findOrFail(request('project'));
     //an_authenticated_cannot_view_the_projects_of_others()
     //if (auth()->id() != $project->owner_id) {
-        if (auth()->user()->isNot($project->owner)) {   
-        abort(403);
-    }
+        //if (auth()->user()->isNot($project->owner)) {   
+        //abort(403); }
+        $this->authorize('update', $project);
+    
     
     return view('projects.show', compact('project'));
 
@@ -49,8 +50,9 @@ class ProjectsController extends Controller
         //Se o atributo required estiver presente, o campo deve conter um valor quando o formulário for enviado.
         $attributes = request()->validate([
             'title' => 'required', 
-            'description' => 'required'
-            //'owner_id' => 'required'
+            'description' => 'required',
+            //'owner_id' => 'required',
+            'notes' => 'min:3'
             ]);
 
             //dd($attributes);
@@ -64,6 +66,23 @@ class ProjectsController extends Controller
     // redirect
     return redirect($project->path());
         
+    }
+
+    /**
+     * Update the project.
+     *
+     * @param  Project $project
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function update(Project $project)
+    {
+        $this->authorize('update', $project);
+        
+
+        $project->update(request(['notes']));
+
+        return redirect($project->path());
     }
 
 }

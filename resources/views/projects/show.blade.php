@@ -59,7 +59,7 @@
                                             name="notes"
                                             class="card w-full mb-4"
                                             style="min-height: 200px"
-                                            placeholder="Anything special that you want to make a note of?"
+                                            placeholder="Deseja anotar algo?"
                                         >{{ $project->notes }}</textarea>
                 
                                         <button type="submit" class="btn btn-primary">Save</button>
