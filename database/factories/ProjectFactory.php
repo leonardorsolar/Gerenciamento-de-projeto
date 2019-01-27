@@ -9,3 +9,4 @@ $factory->define(App\Project::class, function (Faker $faker) {
         'owner_id' => factory(App\User::class)
     ];
 });
+
