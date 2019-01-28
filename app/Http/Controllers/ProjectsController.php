@@ -48,17 +48,12 @@ class ProjectsController extends Controller
 
         // validate
         //Se o atributo required estiver presente, o campo deve conter um valor quando o formulário for enviado.
-        $attributes = request()->validate([
-            'title' => 'required', 
-            'description' => 'required',
-            //'owner_id' => 'required',
-            'notes' => 'min:3'
-            ]);
+        //$attributes = []
 
             //dd($attributes);
             //$attributes ['owner_id'] = auth()->id();
 
-            $project = auth()->user()->projects()->create($attributes);
+            $project = auth()->user()->projects()->create($this->validateRequest());
 
         // persist = insert no banco = passar o método a ser persistido como parametro
     //Project::create($attributes);
@@ -66,6 +61,17 @@ class ProjectsController extends Controller
     // redirect
     return redirect($project->path());
         
+    }
+
+        /**
+     * Edit the project.
+     *
+     * @param  Project $project
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Project $project)
+    {
+        return view('projects.edit', compact('project'));
     }
 
     /**
@@ -77,12 +83,29 @@ class ProjectsController extends Controller
      */
     public function update(Project $project)
     {
+        
         $this->authorize('update', $project);
         
+        $attributes = $this->validateRequest();
 
-        $project->update(request(['notes']));
+        //$project->update($this->validate());
+        $project->update($attributes);
 
         return redirect($project->path());
+    }
+
+    /**
+     * Validate the request attributes.
+     *
+     * @return array
+     */
+    protected function validateRequest()
+    {
+        return request()->validate([
+            'title' => 'sometimes|required',
+            'description' => 'sometimes|required',
+            'notes' => 'nullable'
+        ]);
     }
 
 }

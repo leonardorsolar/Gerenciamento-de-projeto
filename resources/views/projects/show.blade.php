@@ -9,7 +9,7 @@
                 / {{ $project->title }}
             </p>
 
-            <a href="{{ $project->path().'/edit' }}" class="btn btn-primary">Edit Project</a>
+            <a href="{{ $project->path().'/edit' }}" class="btn btn-primary">Editar Projeto</a>
         </div>
     </header>
 
